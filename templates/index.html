@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Dashboard</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+            color: #333;
+        }
+        .container {
+            width: 80%;
+            margin: auto;
+            overflow: hidden;
+            padding: 20px 0;
+        }
+        header, .user-details, .upload-section {
+            background: #fff;
+            margin-bottom: 20px;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        header {
+            background: #333;
+            color: #fff;
+            border-bottom: 3px solid #0779e4;
+        }
+        header h1, .user-details h2, .upload-section h2 {
+            margin: 0 0 15px 0;
+        }
+        header a, .logout-link {
+            color: #fff;
+            text-decoration: none;
+            text-transform: uppercase;
+            font-size: 16px;
+        }
+        .logout-link {
+            float: right;
+            background: #f44336;
+            padding: 10px 20px;
+            border-radius: 4px;
+        }
+        .logout-link:hover {
+            background: #d73833;
+        }
+        .btn {
+            background: #0b7dda;
+            color: #fff;
+            padding: 10px 20px;
+            font-size: 15px;
+            border: none;
+            cursor: pointer;
+            border-radius: 4px;
+        }
+        .btn:hover {
+            background: #0a6cac;
+        }
+        label {
+            display: block;
+            margin-bottom: 10px;
+        }
+        input[type="file"] {
+            margin-bottom: 15px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>User Dashboard</h1>
+            <a href="/logout" class="logout-link">Logout</a>
+        </div>
+    </header>
+    <div class="container user-details">
+        <h2>Profile Details</h2>
+        <p><strong>Firstname:</strong> {{ user.first_name }}</p>
+        <p><strong>Lastname:</strong> {{ user.last_name }}</p>
+    </div>
+    <div class="container upload-section">
+        <h2>Upload Document</h2>
+        <form action="/upload" method="post" enctype="multipart/form-data">
+            <button class="btn" type="submit">Upload PDF</button>
+        </form>
+    </div>
+</body>
+</html>

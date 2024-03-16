@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Panel</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+</head>
+<body>
+<div class="container mt-5">
+    <a href="{{ url_for('index') }}" class="btn btn-secondary mb-3">Back to Main Page</a>
+    <h2>Admin Panel</h2>
+    <form method="GET" action="{{ url_for('admin_panel') }}" class="form-inline mb-4">
+        <input type="text" class="form-control mb-2 mr-sm-2" name="username" placeholder="Username">
+        <select class="form-control mb-2 mr-sm-2" name="year">
+            <option value="">Year</option>
+            {% for y in range(2020, current_year+1) %}
+            <option value="{{ y }}">{{ y }}</option>
+            {% endfor %}
+        </select>
+        <select class="form-control mb-2 mr-sm-2" name="month">
+            <option value="">Month</option>
+            {% for m in range(1, 13) %}
+            <option value="{{ '{:02d}'.format(m) }}">{{ m }}</option>
+            {% endfor %}
+        </select>
+        <select class="form-control mb-2 mr-sm-2" name="group_by">
+            <option value="">Group By</option>
+            <option value="year">Year</option>
+            <option value="month">Month</option>
+        </select>
+        <button type="submit" class="btn btn-primary mb-2">Filter</button>
+    </form>
+
+    {% if grouped_files %}
+        {% for group, files in grouped_files.items() %}
+            <h3>{{ group }}</h3>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Filename</th>
+                        <th>Year-Month</th>
+                        <th>User</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for file in files %}
+                    <tr>
+                        <td><a href="{{ file.get_url() }}" target="_blank">{{ file.filename }}</a></td>
+                        <td>{{ file.year }}-{{ file.month }}</td>
+                        <td>{{ file.user.username }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% endfor %}
+    {% else %}
+        <p>No files found.</p>
+    {% endif %}
+</div>
+
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+</body>
+</html>
